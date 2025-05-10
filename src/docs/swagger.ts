@@ -1,4 +1,7 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import { config } from 'dotenv';
+
+config();
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -9,8 +12,8 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:3000/api',
-      description: 'Servidor local'
+      url: '/api',
+      description: process.env.NODE_ENV === 'production' ? 'Servidor de produção' : 'Servidor local'
     }
   ],
   components: {
