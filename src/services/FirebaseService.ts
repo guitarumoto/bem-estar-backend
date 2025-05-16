@@ -162,6 +162,5 @@ export class FirebaseService {
       console.error('Erro ao deletar humor no Firestore:', error);
       throw error;
     }
-    }
   }
-} 
+}
