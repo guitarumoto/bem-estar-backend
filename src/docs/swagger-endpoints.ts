@@ -294,4 +294,25 @@
  *         description: Não autorizado
  *       500:
  *         description: Erro ao atualizar humor
- */ 
+ * 
+ *  delete:
+ *     summary: Deleta um registro de humor
+ *     tags: [Humores]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Humor deletado com sucesso
+ *       401:
+ *         description: Não autorizado
+ *       403:
+ *         description: Permissão negada
+ *       500:
+ *         description: Erro ao deletar humor
+ */

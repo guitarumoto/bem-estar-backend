@@ -56,4 +56,25 @@ export class MoodController {
       void res.status(500).json({ error: 'Erro ao atualizar registro de humor' });
     }
   }
-} 
+  
+  async deleteMood(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      const moods = await this.firebaseService.getMoodsByUserId(req.user!.uid);
+      const moodBelongsToUser = moods.some(mood => mood.id === id);
+
+      if (!moodBelongsToUser) {
+        void res.status(403).json({
+          error: 'Você não tem permissão para deletar este registro de humor',
+        });
+        return;
+      }
+
+      await this.firebaseService.deleteMood(id);
+      void res.status(204).send();
+    } catch (error) {
+      void res.status(500).json({ error: 'Erro ao deletar registro de humor' });
+    }
+  }
+}

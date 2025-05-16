@@ -8,5 +8,6 @@ const moodController = new MoodController();
 router.post('/', authenticate, moodController.createMood.bind(moodController));
 router.get('/', authenticate, moodController.getMoods.bind(moodController));
 router.patch('/:id', authenticate, moodController.updateMood.bind(moodController));
+router.delete('/:id', authenticate, moodController.deleteMood.bind(moodController));
 
 export default router; 

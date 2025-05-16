@@ -169,4 +169,16 @@ export class FirebaseService {
   async deleteGoal(id: string): Promise<void> {
     await db.collection('goals').doc(id).delete();
   }
+
+  async deleteMood(id: string): Promise<void> {
+    try {
+      console.log('Deletando humor no Firestore:', id);
+      await db.collection('moods').doc(id).delete();
+      console.log('Humor deletado com sucesso no Firestore');
+    } catch (error) {
+      console.error('Erro ao deletar humor no Firestore:', error);
+      throw error;
+    }
+    }
+  }
 } 
