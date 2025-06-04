@@ -208,16 +208,12 @@
  *             type: object
  *             required:
  *               - mood
- *               - date
  *             properties:
  *               mood:
  *                 type: integer
  *                 example: 3
  *               note:
  *                 type: string
- *               date:
- *                 type: string
- *                 format: date-time
  *     responses:
  *       201:
  *         description: Humor registrado com sucesso
@@ -235,19 +231,6 @@
  *     tags: [Humores]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: startDate
- *         schema:
- *           type: string
- *           format: date-time
- *         description: Data inicial para filtro
- *       - in: query
- *         name: endDate
- *         schema:
- *           type: string
- *           format: date-time
- *         description: Data final para filtro
  *     responses:
  *       200:
  *         description: Lista de humores
@@ -284,9 +267,6 @@
  *                 example: 3
  *               note:
  *                 type: string
- *               date:
- *                 type: string
- *                 format: date-time
  *     responses:
  *       204:
  *         description: Humor atualizado com sucesso
@@ -294,7 +274,7 @@
  *         description: Não autorizado
  *       500:
  *         description: Erro ao atualizar humor
- * 
+ *
  *  delete:
  *     summary: Deleta um registro de humor
  *     tags: [Humores]
