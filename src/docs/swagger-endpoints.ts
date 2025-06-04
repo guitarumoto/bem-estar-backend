@@ -14,8 +14,6 @@
  *               - name
  *               - email
  *               - password
- *               - birthDate
- *               - gender
  *             properties:
  *               name:
  *                 type: string
@@ -26,14 +24,6 @@
  *               password:
  *                 type: string
  *                 example: "senhaSegura123"
- *               birthDate:
- *                 type: string
- *                 format: date
- *                 example: "2000-01-01"
- *               gender:
- *                 type: string
- *                 enum: [male, female, other]
- *                 example: "male"
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso
