@@ -52,7 +52,6 @@ const swaggerDefinition = {
         properties: {
           id: { type: 'string' },
           userId: { type: 'string' },
-          date: { type: 'string', format: 'date-time' },
           mood: { type: 'integer' },
           note: { type: 'string' },
           createdAt: { type: 'string', format: 'date-time' },
