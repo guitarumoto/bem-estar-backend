@@ -1,4 +1,4 @@
-/**
+/*
  * @swagger
  * /users:
  *   post:
