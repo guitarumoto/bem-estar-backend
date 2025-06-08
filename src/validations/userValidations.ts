@@ -14,14 +14,6 @@ export const createUserValidation = [
     .withMessage("Email inválido")
     .notEmpty()
     .withMessage("Email é obrigatório"),
-
-  body("password")
-    .isString()
-    .withMessage("Senha deve ser uma string")
-    .notEmpty()
-    .withMessage("Senha é obrigatória")
-    .isLength({ min: 6 })
-    .withMessage("Senha deve ter pelo menos 6 caracteres"),
 ];
 
 export const updateUserValidation = [

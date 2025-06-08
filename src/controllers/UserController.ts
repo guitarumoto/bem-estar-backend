@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { FirebaseService } from '../services/FirebaseService';
-import { CreateUserDTO, UpdateUserDTO } from '../models/User';
-import { getAuth } from 'firebase-admin/auth';
+import { UpdateUserDTO } from '../models/User';
 
 export class UserController {
   private firebaseService: FirebaseService;
@@ -12,15 +11,12 @@ export class UserController {
 
   async createUser(req: Request, res: Response): Promise<void> {
     try {
-      const userData: CreateUserDTO = req.body;
-      const auth = getAuth();
-      const userRecord = await auth.createUser({
-        email: userData.email,
-        password: userData.password,
-      });
+      const { name, email, id } = req.body;
+
       const user = await this.firebaseService.createUser({
-        ...userData,
-        id: userRecord.uid,
+        id,
+        name,
+        email,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       });
