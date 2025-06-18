@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { config } from 'dotenv';
 import userRoutes from './routes/userRoutes';
@@ -12,6 +13,12 @@ import swaggerSpec from './docs/swagger';
 config();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
 
 app.use(
   helmet({
