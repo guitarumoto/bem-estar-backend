@@ -37,7 +37,7 @@ const generalLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
-  handler: (req, res) => {
+  handler: (_, res) => {
     res.status(429).json({
       error: 'Muitas requisições realizadas, tente novamente em 15 minutos',
       retryAfter: '15 minutes',
@@ -52,7 +52,7 @@ const authLimiter = rateLimit({
     error: 'Muitas tentativas de autenticação, tente novamente em 15 minutos',
   },
   skipSuccessfulRequests: true,
-  handler: (req, res) => {
+  handler: (_, res) => {
     res.status(429).json({
       error: 'Muitas tentativas de autenticação, tente novamente em 15 minutos',
     });
@@ -65,7 +65,7 @@ const createLimiter = rateLimit({
   message: {
     error: 'Muitas criações em pouco tempo, aguarde um momento',
   },
-  handler: (req, res) => {
+  handler: (_, res) => {
     res.status(429).json({
       error: 'Muitas criações em pouco tempo, aguarde um momento',
     });
@@ -109,7 +109,7 @@ app.use('/api/users', authLimiter, userRoutes);
 app.use('/api/moods', createLimiter, moodRoutes);
 app.use('/api/goals', createLimiter, goalRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use((req, res, next) => {
+app.use((req, res, _) => {
   res.status(404).json({
     error: 'Rota não encontrada',
     path: req.originalUrl,
@@ -121,7 +121,7 @@ app.use((req, res, next) => {
 app.use(
   (
     err: any,
-    req: express.Request,
+    _: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
