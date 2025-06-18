@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { config } from 'dotenv';
 import userRoutes from './routes/userRoutes';
@@ -14,11 +15,9 @@ config();
 
 const app = express();
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(morgan('combined'));
-} else {
-  app.use(morgan('dev'));
-}
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
+app.use(compression());
 
 app.use(
   helmet({
@@ -148,10 +147,23 @@ app.use(
 
 const PORT = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  const env = process.env.NODE_ENV || 'development';
+  console.log(`🚀 Server running on port ${PORT} (${env})`);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
   });
-}
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+  });
+});
 
 export default app;

@@ -27,6 +27,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
+    "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
@@ -50,6 +51,7 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "axios": "^1.10.0",
+    "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
