@@ -13,6 +13,17 @@ export class MoodController {
   async createMood(req: Request, res: Response): Promise<void> {
     try {
       const moodData: CreateMoodDTO = req.body;
+      
+      // Verificar se já existe um humor para hoje
+      const todayMood = await this.firebaseService.getTodayMoodByUserId(req.user!.uid);
+      
+      if (todayMood) {
+        void res.status(409).json({ 
+          error: "Já existe um registro de humor para hoje. Use o endpoint de atualização para modificar o registro existente." 
+        });
+        return;
+      }
+      
       const mood = await this.firebaseService.createMood({
         ...moodData,
         id: uuidv4(),
@@ -32,6 +43,21 @@ export class MoodController {
       void res.json(moods);
     } catch (error) {
       void res.status(500).json({ error: "Erro ao buscar registros de humor" });
+    }
+  }
+
+  async getTodayMood(req: Request, res: Response): Promise<void> {
+    try {
+      const todayMood = await this.firebaseService.getTodayMoodByUserId(req.user!.uid);
+      
+      if (!todayMood) {
+        void res.status(404).json({ error: "Nenhum registro de humor encontrado para hoje" });
+        return;
+      }
+      
+      void res.json(todayMood);
+    } catch (error) {
+      void res.status(500).json({ error: "Erro ao buscar humor do dia" });
     }
   }
 

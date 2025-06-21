@@ -84,6 +84,28 @@ export class FirebaseService {
     }
   }
 
+  async getTodayMoodByUserId(userId: string): Promise<IUserMood | null> {
+    try {
+      const today = new Date();
+      const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
+
+      // Buscar todos os moods do usuário e filtrar por data no código
+      const allMoods = await this.getMoodsByUserId(userId);
+      
+      // Filtrar moods do dia de hoje
+      const todayMood = allMoods.find(mood => {
+        const moodDate = new Date(mood.createdAt);
+        return moodDate >= startOfDay && moodDate <= endOfDay;
+      });
+
+      return todayMood || null;
+    } catch (error) {
+      console.error("Erro ao buscar humor do dia:", error);
+      throw error;
+    }
+  }
+
   async updateMood(id: string, data: Partial<IUserMood>): Promise<void> {
     try {
       await db.collection("moods").doc(id).update(data);
